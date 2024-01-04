@@ -1,24 +1,16 @@
-﻿# LittleSLAM
+# LittleSLAM
 
-## LittleSLAMについて
+## About LittleSLAM
 
-LittleSLAMは、SLAM学習用プログラムです。
-2Dレーザスキャナのデータ（スキャン）とオドメトリデータを格納したファイルを入力し、
-ロボット位置の軌跡と2D点群地図をgnuplot上に出力します。
+LittleSLAM is a program for learning SLAM. Enter a file containing 2D laser scanner data (scan) and odometry data, The trajectory of the robot position and the 2D point cloud map are output on gnuplot.
 
-LittleSLAMは、スキャンマッチングに基づく位置合せ、レーザスキャナとオドメトリのセンサ融合、
-Graph-based SLAMに基づくループ閉じ込みなどの要素技術から構成されています。
+LittleSLAM is a combination of alignment based on scan matching, sensor fusion of laser scanner and odometry, It consists of elemental technologies such as loop closure based on graph-based SLAM.
 
-LittleSLAMは参考書籍[1]の教材として作られたプログラムであり、
-わかりやすさを優先してシンプルなアルゴリズムを採用しています。
-そのため、フルスペックのSLAMプログラムと比べると性能は落ちますが、
-内容の理解はしやすくなっています。
+LittleSLAM is a program created as a teaching material for reference books [1]. A simple algorithm is used in favor of clarity. Therefore, the performance is lower than that of a full-spec SLAM program. The content is easy to understand.
 
+## Execution environment
 
-## 実行環境
-
-LittleSLAMはプログラミング言語C++で記述されています。
-動作を確認した実行環境は下記のものです。いずれも64ビット版です。
+LittleSLAM is written in the programming language C++. The execution environment that has been confirmed to work is as follows. Both are 64-bit versions.
 
 | OS | C++ |
 |:--:|:---:|
@@ -27,60 +19,46 @@ LittleSLAMはプログラミング言語C++で記述されています。
 | Linux Ubuntu 14.04 LTS | gcc 4.8.4|
 | Linux Ubuntu 16.04 LTS | gcc 5.4.0|
 
-32ビットOSでの動作確認はしていないので、必要な場合はご自分で試してください。
+We have not tested it on a 32-bit OS, so please try it yourself if you need it.
 
+## Required Software
+The following software is required to run LittleSLAM.
 
-## 必要なソフトウェア
+| software | content | version |
+|:--------:|:-------:|:-------:|
+| Boost | C++ Generic Library | 1.58.0|
+| Eigen3 | Linear Algebra Library | 3.2.4|
+| gnuplot | Graph drawing tools | 5.0|
+| CMake | Build Assistance Tools | 3.2.2|
+| p2o | Graph-based SLAM Solver | beta|
 
-LittleSLAMの実行には、下記のソフトウェアが必要です。
+The version is the one used in the development of LittleSLAM, not a definite condition. Higher versions usually work. It may work with earlier versions.
 
-| ソフトウェア | 内容 | バージョン |
-|:------------:|:----:|:----------:|
-| Boost        | C++汎用ライブラリ |1.58.0 |
-| Eigen3       | 線形代数ライブラリ|3.2.4 |
-| gnuplot      | グラフ描画ツール  |5.0 |
-| CMake        | ビルド支援ツール  |3.2.2 |
-| p2o          | Graph-based SLAMソルバ|beta |
+## use
+[Click here](doc/install-win.md) for how to use it on Windows
 
-バージョンはLittleSLAMの開発で使用したものであり、明確な条件ではありません。
-これ以上のバージョンであれば通常は動作します。
-これ以下のバージョンでも動作する可能性はあります。
+[Here's](doc/install-linux.md) how to use it on Linux
 
-## 使い方
+## Dataset
+Six data files are available for experiments. The list is shown in the table below. You can [download it here](https://furo.org/software/little_slam/dataset.zip).
 
-- Windowsでの使い方は[こちら](doc/install-win.md)
+| File Name           | content |
+|:--------------------|:--------|
+| corridor.lsc        | Corridor (single loop)|
+| hall.lsc            | Hall (single loop)|
+| corridor-theone.lsc | Under the corridor (degraded)|
+| hall-the-one.lsc    | Hall (degenerate)|
+| corridor-loops.lsc  | Corridor (multiple loops)|
+| hall-loops.lsc      | Hall (multi-loop)|
 
-- Linuxでの使い方は[こちら](doc/install-linux.md)
+## customization
+LittleSLAM is a learning program that has undergone several improvements from its basic form. It can be customized to complete.
+For more information, please [see here](doc/customize.md).
 
-## データセット
+## Reference Books
+The following books are manuals on SLAM. In addition to a general explanation of SLAM, As a specific example, LittleSLAM is used as a teaching material and its source code is explained in detail.
 
-実験用に6個のデータファイルを用意しています。下表に一覧を示します。
-[ここ](https://furo.org/software/little_slam/dataset.zip)からダウンロードできます。
+[1] Masahiro Tomono, "Introduction to SLAM -- Self-Localization and Map Construction Technology for Robots", Ohmsha, 2018
 
-
-| ファイル名          | 内容         |
-|:--------------------|:-------------|
-| corridor.lsc        | 廊下（単一ループ） |
-| hall.lsc            | 広間（単一ループ） |
-| corridor-degene.lsc | 廊下（退化） |
-| hall-degene.lsc     | 広間（退化） |
-| corridor-loops.lsc  | 廊下（多重ループ） |
-| hall-loops.lsc      | 広間（多重ループ） |
-
-## カスタマイズ
-
-LittleSLAMは学習用プログラムであり、基本形からいくつかの改良を経て
-完成するようにカスタマイズできます。  
-詳細は[こちら](doc/customize.md)を参照してください。
-
-## 参考書籍
-
-下記の書籍はSLAMの解説書です。SLAMの一般的な解説をするとともに、
-具体例としてLittleSLAMを教材に用い、そのソースコードの詳細を説明しています。
-
-[1] 友納正裕、「SLAM入門 -- ロボットの自己位置推定と地図構築の技術」、オーム社、2018年  
-
-## ライセンス
-
-- LittleSLAMは、MPL-2.0ライセンスにもとづいています。
-
+## license
+- LittleSLAM is based on the MPL-2.0 license.
